@@ -5,6 +5,7 @@ from components.opponent import Opponent
 from components.obstacle import Obstacle
 from ursina import Ursina, window, color, Text, camera, time, held_keys, invoke, application, Entity, Audio, destroy, print_on_screen
 import json
+from config import APP_TITLE, APP_ICON
 
 # Dictionary Levels
 levels = json.load(open("./levels.json",))
@@ -21,7 +22,7 @@ obstacle_entity = None
 point_text = None
 
 # Game init
-app = Ursina(title = "Pong Game")
+app = Ursina(title = APP_TITLE, icon=APP_ICON)
 window.borderless = False  
 
 # Game background
