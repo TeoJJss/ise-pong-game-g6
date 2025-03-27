@@ -4,11 +4,11 @@
         "win_score": 5,
         "paddle_length": 0.20,
         "captions": ["Level 1", "Use Left and Right keys to control paddle", "Get 5 points to level up", "Ready", "GO!"],
-        "bot_accuracy": 0.6,
+        "bot_accuracy": 0.8,
         "background": "",
         "background_music": "",
-        "win_captions": ["Let's proceed to next level"],
-        "lose_captions": ["You lost", "But we proceed to next level, heheha..."],
+        "win_captions": ["You win!","Let's proceed to next level"],
+        "lose_captions": ["You lost", "Try again"],
         "next": "level_2"
     },
     "level_2": {
@@ -16,7 +16,7 @@
         "win_score": 5,
         "paddle_length": 0.13,
         "captions": ["Level 2", "Ready", "GO!"],
-        "bot_accuracy": 0.65,
+        "bot_accuracy": 0.85,
         "background": "",
         "background_music": "",
         "obstacle":[ 
@@ -31,8 +31,8 @@
                 "scale": [0.15, 0.1, 0.02]
             }
         ],
-        "win_captions": ["Congrats"],
-        "lose_captions": ["You failed to prove yourself", "Try again next time"],
+        "win_captions": ["Congrats", "You win"],
+        "lose_captions": ["You failed to prove yourself", "Try again"],
         "next": null
     }
 }

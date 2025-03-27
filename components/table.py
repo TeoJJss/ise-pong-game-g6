@@ -1,4 +1,4 @@
-from ursina import Entity, color, print_on_screen, Audio,destroy, Vec3
+from ursina import Entity, color, Audio,destroy, Vec3
 from config import whistle_sound, pong_sound
 from random import uniform
 
