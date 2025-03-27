@@ -88,17 +88,17 @@ def update():
 
     if score_A >= level_data['win_score']:
         if level_data['next'] is None:
-            end_game("Bot Wins Final Level!", is_player_winner=False)
+            end_game("Bot Wins Final Level! Try again! ", is_player_winner=False)
         else:
-            proceed_to_next_level("Bot Wins!")
+            proceed_to_next_level("Bot Wins!", restart=True)
     elif score_B >= level_data['win_score']:
         if level_data['next'] is None:
             end_game("Player Wins Final Level!", is_player_winner=True)
         else:
             proceed_to_next_level("Player Wins!")
 
-def proceed_to_next_level(message):
-    global game_started, current_level_key, message_text
+def proceed_to_next_level(message, restart=False):
+    global game_started, current_level_key, message_text, score_A, score_B, game_time
     game_started = False
     ball.dx = 0
     ball.dz = 0
@@ -106,14 +106,17 @@ def proceed_to_next_level(message):
     # Display win message and track it
     if message_text:
         message_text.enabled = False  # Hide previous message if any
-    message_text = Text(text=message, scale=3, position=(0, 0), color=color.red, origin=(0,0))
+    message_text = Text(text=message, scale=3, position=(0, 0), color=color.red, origin=(0, 0))
 
-    next_level = levels[current_level_key]['next']
-    if next_level:
-        current_level_key = next_level
-        invoke(start_level, delay=2)
+    if restart:
+        invoke(start_level, delay=2)  # Restart current level
     else:
-        end_game("All Levels Complete!", is_player_winner=True)
+        next_level = levels[current_level_key]['next']
+        if next_level:
+            current_level_key = next_level
+            invoke(start_level, delay=2)
+        else:
+            end_game("All Levels Complete!", is_player_winner=True)
 
 
 def start_level():
