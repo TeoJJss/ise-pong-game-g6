@@ -12,11 +12,11 @@
         "next": "level_2"
     },
     "level_2": {
-        "ball_speed": 1.5,
+        "ball_speed": 1.2,
         "win_score": 5,
-        "paddle_length": 0.13,
+        "paddle_length": 0.15,
         "captions": ["Level 2", "Ready", "GO!"],
-        "bot_accuracy": 0.85,
+        "bot_accuracy": 0.95,
         "background": "",
         "background_music": "",
         "obstacle":[ 

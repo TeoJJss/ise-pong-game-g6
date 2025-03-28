@@ -13,7 +13,7 @@ class Opponent(Paddle):
         if abs(ball.x - self.x) > 0.01:
             # Add a small delay or miss chance
             if random.random() > self.chance_to_miss:
-                self.x = lerp(self.x, ball.x, self.speed * time.dt)
+                self.x = lerp(self.x, ball.x, self.speed * time.dt) # use linear interpolation to determine how much for paddle to move toward ball
 
         # Clamp to table boundaries
         self.x = max(min(self.x, 0.4), -0.4)

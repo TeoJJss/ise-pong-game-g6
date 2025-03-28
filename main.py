@@ -5,7 +5,7 @@ from components.opponent import Opponent
 from components.obstacle import Obstacle
 from ursina import Ursina, window, color, Text, camera, time, held_keys, invoke, application, Entity, Audio, destroy, print_on_screen
 import json
-from config import APP_TITLE, APP_ICON
+from config import APP_TITLE, APP_ICON, CAPTION_DELAY
 
 # Dictionary Levels
 levels = json.load(open("./levels.json",))
@@ -20,6 +20,8 @@ score_B = 0
 game_over = False
 obstacle_entity = None
 point_text = None
+paused = False  
+pause_text = None  
 
 # Game init
 app = Ursina(title = APP_TITLE, icon=APP_ICON)
@@ -45,9 +47,10 @@ if levels[current_level_key].get('background_music', ''):
 table = Table()
 paddle_A = Opponent(table=table, z=0.22)
 paddle_B = Paddle(table=table, z=-0.62)
-Text(text="Bot", scale=2, position=(-0.1, 0.32))
+Text(text="Bot", scale=2, position=(-0.05, 0.32))
 Text(text="Player", scale=2, position=(-0.1, -0.4))
 point_text = Text(text=f"Bot : Player  = {score_A} : {score_B}", position=(-0.85, .45), scale=1, color=color.white)
+pause_inst = Text(text="PRESS ESC to PAUSE/RESUME", position=(-0.85, .35), scale=1, color=color.white)
 ball = Ball(table=table)
 camera.position = (0, 15, -26)
 camera.rotation_x = 30
@@ -61,11 +64,15 @@ def start_game():
     ball.reset_position(wait=True)
     ball.speed = levels[current_level_key].get('ball_speed', 1)
 
+def input(key):
+    if key == "escape":
+        toggle_pause()
+
 def update():
     global score_A, score_B, game_time, game_started, current_level_key, point_text, obstacle_entities
-
-    if not game_started or game_over:
-        return
+    
+    if paused or not game_started or game_over: # if game is paused OR not started OR already end, stop the game logic
+        return 
 
     level_data = levels[current_level_key]
     # paddle_A.set_length(level_data['paddle_length'])
@@ -79,7 +86,7 @@ def update():
     if game_time >= 10:
         ball.speed = max(2, levels[current_level_key].get('ball_speed', 1) * 2)
     if game_time >= 20:
-        ball.speed = max(2.5, levels[current_level_key].get('ball_speed', 1) * 2.5)
+        ball.speed = max(2.2, levels[current_level_key].get('ball_speed', 1) * 2.2)
 
     ball.move()
     table.check_bounds(ball, paddle_A, paddle_B)
@@ -94,6 +101,27 @@ def update():
             end_game("Player Wins Final Level!", is_player_winner=True)
         else:
             proceed_to_next_level("Player Wins!", is_player_winner=True)
+
+def toggle_pause():
+    global paused, pause_text
+    paused = not paused
+
+    if paused:
+        pause_text = Text(
+            text="PAUSED",
+            scale=3,
+            position=(0, 0.1),
+            color=color.red,
+            origin=(0, 0),
+            font='./assets/font/Kanit-Bold.ttf',
+            outline_color=color.black,
+            outline_thickness=1.5,
+            shadow=True
+        )
+    else:
+        if pause_text:
+            destroy(pause_text)
+            pause_text = None
 
 def proceed_to_next_level(message, is_player_winner):
     global game_started, current_level_key, message_text, score_A, score_B, game_time, caption_text
@@ -111,7 +139,7 @@ def proceed_to_next_level(message, is_player_winner):
                 caption_text.enabled = False
             caption_text = Text(
                 text=captions[index],
-                scale=2,
+                scale=1.5,
                 position=(0, 0.4),
                 color=color.azure,
                 background=True,
@@ -121,7 +149,7 @@ def proceed_to_next_level(message, is_player_winner):
                 outline_thickness=1.5,
                 shadow=True
             )
-            invoke(display_end_level_caption, index + 1, delay=1.5)
+            invoke(display_end_level_caption, index + 1, delay=CAPTION_DELAY)
         else:
             if caption_text:
                 caption_text.enabled = False
@@ -230,20 +258,21 @@ def end_game(message, is_player_winner):
                 caption_text.enabled = False
             caption_text = Text(
                 text=captions[index],
-                scale=2,
-                position=(0, 0.4),
+                scale=1.5,
+                position=(0, 0.42),
                 color=color.azure,
                 background=True,
                 origin=(0, 0),
+                font='./assets/font/Kanit-Bold.ttf',
                 outline_color=color.black,
-                outline_thickness=1.5,
+                outline_thickness=1,
                 shadow=True
             )
-            invoke(display_caption, index + 1, delay=1.5)
+            invoke(display_caption, index + 1, delay=CAPTION_DELAY)
         else:
             if caption_text:
                 caption_text.enabled = False
-            invoke(application.quit, delay=1.5)
+            invoke(application.quit, delay=2.5)
 
     display_caption(0)
 
@@ -255,17 +284,17 @@ def show_captions(level_captions):
                 caption_text.enabled = False
             caption_text = Text(
                 text=level_captions[index],
-                scale=2,
-                position=(0, 0.4),
+                scale=1.5,
+                position=(0, 0.42),
                 color=color.azure,
                 background=True,
                 origin=(0, 0),
                 font='./assets/font/Kanit-Bold.ttf',
                 outline_color=color.black,
-                outline_thickness=1.5,
+                outline_thickness=1,
                 shadow=True
             )
-            invoke(display_caption, index + 1, delay=2)
+            invoke(display_caption, index + 1, delay=CAPTION_DELAY)
         else:
             if caption_text:
                 caption_text.enabled = False
