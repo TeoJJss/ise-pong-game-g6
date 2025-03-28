@@ -1,4 +1,4 @@
-# Imaging & Special Effects - Group 6
+# Pong Game - ISE Group 6
 This project is developed in **Python 3.10**.  
 To launch, run the following commands:
 ```

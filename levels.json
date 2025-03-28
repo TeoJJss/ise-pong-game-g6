@@ -4,7 +4,7 @@
         "win_score": 5,
         "paddle_length": 0.20,
         "captions": ["Level 1", "Use Left and Right keys to control paddle", "Get 5 points to level up", "Ready", "GO!"],
-        "bot_accuracy": 0.8,
+        "bot_accuracy": 0.75,
         "background": "",
         "background_music": "",
         "win_captions": ["You win!","Let's proceed to next level"],
