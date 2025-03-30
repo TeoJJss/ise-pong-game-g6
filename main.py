@@ -3,9 +3,9 @@ from components.paddle import Paddle
 from components.ball import Ball
 from components.opponent import Opponent
 from components.obstacle import Obstacle
-from ursina import Ursina, window, color, Text, camera, time, held_keys, invoke, application, Entity, Audio, destroy, print_on_screen
+from ursina import Ursina, window, color, Text, camera, time, held_keys, invoke, application, Entity, Audio, destroy
 import json
-from config import APP_TITLE, APP_ICON, CAPTION_DELAY
+from config import *
 
 # Dictionary Levels
 levels = json.load(open("./levels.json",))
@@ -34,7 +34,7 @@ else:
     background = Entity(
         model='quad',
         texture=levels[current_level_key]['background'],
-        scale=(50, 30),         # Make it large enough to fill view
+        scale=(window.aspect_ratio * 30, 50),        # Make it large enough to fill view
         position=(0, 0, 10),     # Push it behind the camera/table
         double_sided=True         # Make sure it's visible from both sides
     )
@@ -49,8 +49,8 @@ paddle_A = Opponent(table=table, z=0.22)
 paddle_B = Paddle(table=table, z=-0.62)
 Text(text="Bot", scale=2, position=(-0.05, 0.32))
 Text(text="Player", scale=2, position=(-0.1, -0.4))
-point_text = Text(text=f"Bot : Player  = {score_A} : {score_B}", position=(-0.85, .45), scale=1, color=color.white)
-pause_inst = Text(text="PRESS ESC to PAUSE/RESUME", position=(-0.85, .35), scale=1, color=color.white)
+point_text = Text(text=f"Bot : Player  = {score_A} : {score_B}", position=(-0.65, .35), scale=1.3, color=color.white, outline_color=color.blue,outline_thickness=1, shadow=True, font=roboto_font)
+pause_inst = Text(text="PRESS ESC to PAUSE/RESUME", position=(0.25, .35), scale=1.3, color=color.white, outline_color=color.blue,outline_thickness=1, shadow=True, font=roboto_font)
 ball = Ball(table=table)
 camera.position = (0, 15, -26)
 camera.rotation_x = 30
@@ -113,7 +113,7 @@ def toggle_pause():
             position=(0, 0.1),
             color=color.red,
             origin=(0, 0),
-            font='./assets/font/Kanit-Bold.ttf',
+            font=kanit_font,
             outline_color=color.black,
             outline_thickness=1.5,
             shadow=True
@@ -132,6 +132,11 @@ def proceed_to_next_level(message, is_player_winner):
     level_data = levels[current_level_key]
     captions = level_data['win_captions'] if is_player_winner else level_data['lose_captions']
 
+    if victory_sound and is_player_winner:
+        Audio(victory_sound)
+    elif lost_sound and not is_player_winner:
+        Audio(lost_sound)
+
     def display_end_level_caption(index):
         global caption_text, current_level_key
         if index < len(captions):
@@ -144,7 +149,7 @@ def proceed_to_next_level(message, is_player_winner):
                 color=color.azure,
                 background=True,
                 origin=(0, 0),
-                font='./assets/font/Kanit-Bold.ttf',
+                font=kanit_font,
                 outline_color=color.black,
                 outline_thickness=1.5,
                 shadow=True
@@ -200,7 +205,7 @@ def start_level():
             start_level.background_entity = Entity(
                 model='quad',
                 texture=level_data['background'],
-                scale=(50, 30),
+                scale=(window.aspect_ratio * 30, 50),  
                 position=(0, 0, 10),
                 double_sided=True
             )
@@ -250,6 +255,11 @@ def end_game(message, is_player_winner):
     # Choose the correct caption list
     captions = level_data['win_captions'] if is_player_winner else level_data['lose_captions']
 
+    if victory_sound and is_player_winner:
+        Audio(victory_sound)
+    elif lost_sound and not is_player_winner:
+        Audio(lost_sound)
+
     # Show captions before quitting
     def display_caption(index):
         global caption_text
@@ -263,7 +273,7 @@ def end_game(message, is_player_winner):
                 color=color.azure,
                 background=True,
                 origin=(0, 0),
-                font='./assets/font/Kanit-Bold.ttf',
+                font=kanit_font,
                 outline_color=color.black,
                 outline_thickness=1,
                 shadow=True
@@ -289,7 +299,7 @@ def show_captions(level_captions):
                 color=color.azure,
                 background=True,
                 origin=(0, 0),
-                font='./assets/font/Kanit-Bold.ttf',
+                font=kanit_font,
                 outline_color=color.black,
                 outline_thickness=1,
                 shadow=True

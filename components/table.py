@@ -14,27 +14,31 @@ class Table(Entity):
         self.line = Entity(parent=self, model='quad', scale=(0.88, 0.2, 0.1), position=(0, 3.5, -0.20))
 
     def check_bounds(self, ball, paddle_A, paddle_B):
-        if abs(ball.x) > 0.4:
+        if abs(ball.x) > 0.4 and not ball.just_bounced:
             if pong_sound:
                 Audio(pong_sound)
             ball.dx = -ball.dx
+            ball.just_bounced = True  # Prevent re-triggering in the next frame
+       
+        if abs(ball.x) < 0.38: # Reset flag when ball moves away from bound
+            ball.just_bounced = False
 
         if paddle_A.x > 0.32:
-            if pong_sound:
-                Audio(pong_sound)
+            # if pong_sound:
+            #     Audio(pong_sound)
             paddle_A.x = 0.32
         elif paddle_A.x < -0.32:
-            if pong_sound:
-                Audio(pong_sound)
+            # if pong_sound:
+            #     Audio(pong_sound)
             paddle_A.x = -0.32
 
         if paddle_B.x > 0.32:
-            if pong_sound:
-                Audio(pong_sound)
+            # if pong_sound:
+            #     Audio(pong_sound)
             paddle_B.x = 0.32
         elif paddle_B.x < -0.32:
-            if pong_sound:
-                Audio(pong_sound)
+            # if pong_sound:
+            #     Audio(pong_sound)
             paddle_B.x = -0.32
     
     def check_collision(self, ball, paddle_A, paddle_B, obstacle_entities, score_A, score_B):

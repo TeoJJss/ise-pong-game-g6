@@ -16,6 +16,7 @@ class Ball(Entity):
         self.dx = 0.1
         self.dz = 0.2
         self.speed = speed
+        self.just_bounced = False
 
         # Enable 3D shading and light reflection
         self.texture = 'white_cube'  # Gives a glossy 3D look with lighting
