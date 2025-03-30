@@ -12,18 +12,18 @@
         "next": "level_2"
     },
     "level_2": {
-        "ball_speed": 1.2,
+        "ball_speed": 1.1,
         "win_score": 5,
         "paddle_length": 0.15,
         "captions": ["Level 2", "3!","2!","1!", "GO!"],
-        "bot_accuracy": 0.95,
+        "bot_accuracy": 0.9,
         "background": "",
         "background_music": "",
         "obstacle":[ 
             {
                 "enabled": true,
-                "position": [0.3, 3.71, -0.20],  
-                "scale": [0.2, 0.1, 0.02]
+                "position": [0.2, 3.71, -0.20],  
+                "scale": [0.19, 0.1, 0.02]
             },
             {
                 "enabled": true,
