@@ -136,7 +136,7 @@ def proceed_to_next_level(message, is_player_winner):
                 next_level = levels[current_level_key]['next']
                 if next_level:
                     current_level_key = next_level
-                    invoke(start_level, delay=0.5)
+                    invoke(start_level, delay=0.8)
                 else:
                     end_game("All Levels Complete!", is_player_winner=True)
             else:
@@ -290,6 +290,9 @@ def show_captions(level_captions):
         if index < len(level_captions):
             if caption_text:
                 caption_text.enabled = False
+            if index == len(level_captions) - 1:
+                if game_start_sound:
+                    Audio(game_start_sound)
             caption_text = Text(
                 text=level_captions[index],
                 scale=1.2,
@@ -302,7 +305,7 @@ def show_captions(level_captions):
                 outline_thickness=1,
                 shadow=True
             )
-            invoke(display_caption, index + 1, delay=2.3)
+            invoke(display_caption, index + 1, delay=3.3)
         else:
             if caption_text:
                 caption_text.enabled = False
