@@ -6,20 +6,18 @@ class Ball(Entity):
     def __init__(self, table, speed=1.5):
         super().__init__(
             parent=table,
-            model='sphere',  # You can replace this with a custom model if needed
+            model='sphere',  
             color=color.brown,
             scale=0.05,
             position=(0, 3.71, -0.20),
-            collider='sphere',  # More accurate collider for sphere
-            shader='lit_with_shadows'  # Enable lighting/shadow shader
+            collider='sphere'  
         )
         self.dx = 0.1
         self.dz = 0.2
         self.speed = speed
         self.just_bounced = False
 
-        # Enable 3D shading and light reflection
-        self.texture = 'white_cube'  # Gives a glossy 3D look with lighting
+        self.texture = 'white_cube'  
 
     def move(self):
         if ball_move_sound:
