@@ -6,7 +6,7 @@ class Table(Entity):
     def __init__(self):
         super().__init__(
             model='cube',
-            color=color.green,
+            color=color.blue.tint(0.7),
             scale=(10, 0.5, 14),
             position=(0, 0, 0),
             texture="white_cube"

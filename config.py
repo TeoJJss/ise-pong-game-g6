@@ -4,7 +4,7 @@ pong_sound = "./assets/audio/pong sound.mp3" # when collision
 paddle_move_sound = "" # when paddle move
 ball_move_sound = "" # when ball move
 victory_sound = "./assets/audio/Victory.mp3"
-lost_sound = ""
+lost_sound = ".assets/audio/lose.mp3"
 kanit_font = './assets/font/Kanit-Bold.ttf'
 roboto_font = './assets/font/RobotoSlab-Bold.ttf'
 
