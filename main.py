@@ -305,7 +305,7 @@ def show_captions(level_captions):
                 outline_thickness=1,
                 shadow=True
             )
-            invoke(display_caption, index + 1, delay=3.3)
+            invoke(display_caption, index + 1, delay=3)
         else:
             if caption_text:
                 caption_text.enabled = False
