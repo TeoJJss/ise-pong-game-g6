@@ -30,7 +30,7 @@ class Ball(Entity):
         self.z = -0.20
         self.dx = 0
         self.dz = 0
-        invoke(self.resume_movement, delay=1.5 if wait else 0)
+        invoke(self.resume_movement, delay= 3 if wait else 0)
 
     def resume_movement(self):
         # Randomly choose -1 or 1 for direction

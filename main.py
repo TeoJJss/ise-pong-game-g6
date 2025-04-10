@@ -3,7 +3,7 @@ from components.paddle import Paddle
 from components.ball import Ball
 from components.opponent import Opponent
 from components.obstacle import Obstacle
-from ursina import Ursina, window, color, Text, camera, time, held_keys, invoke, application, Entity, Audio, destroy, load_texture
+from ursina import Ursina, window, color, Text, camera, time, held_keys, invoke, application, Entity, Audio, destroy, load_texture, curve
 import json
 from config import *
 
@@ -42,7 +42,7 @@ def input(key):
     if key == "escape":
         toggle_pause()
 
-def update():
+def update():   
     global score_A, score_B, game_time, game_started, current_level_key, point_text, obstacle_entities
 
     if paused or not game_started or game_over:  # if game is paused OR not started OR already end, stop the game logic
@@ -64,10 +64,27 @@ def update():
 
     ball.move()
     table.check_bounds(ball, paddle_A, paddle_B)
+
+    # Check score changes and trigger effects
+    previous_score_A = score_A
+    previous_score_B = score_B
+
     score_A, score_B = table.check_collision(ball, paddle_A, paddle_B, obstacle_entities, score_A, score_B)
-    # display points
+
+    if score_A > previous_score_A:
+        Audio(whistle_sound)
+        flash_screen(flash_color=color.rgba(252/255, 3/255, 3/255, 0.4))
+        camera.shake(duration=0.2, magnitude=0.02)
+
+    elif score_B > previous_score_B:
+        Audio(whistle_sound)
+        flash_screen(flash_color=color.rgba(15/255, 252/255, 3/255, 0.4))
+        camera.shake(duration=0.2, magnitude=0.02)
+
+    # display updated points
     point_text.text = f"Bot : Player  = {score_A} : {score_B}"
 
+    # check win condition
     if score_A >= level_data['win_score']:
         proceed_to_next_level("Bot Wins!", is_player_winner=False)
     elif score_B >= level_data['win_score']:
@@ -75,6 +92,7 @@ def update():
             end_game("Player Wins Final Level!", is_player_winner=True)
         else:
             proceed_to_next_level("Player Wins!", is_player_winner=True)
+
 
 def toggle_pause():
     global paused, pause_text
@@ -312,6 +330,24 @@ def show_captions(level_captions):
             start_game()
 
     display_caption(0)
+
+def flash_screen(flash_color):
+    flash = Entity(
+        model='quad',
+        color=flash_color,
+        scale=(40, 22),
+        position=(0, 0, -1),  # Set to a layer in front of everything
+        parent=camera.ui
+    )
+    
+    # Fade it out smoothly
+    flash.animate_color(
+        color.rgba(flash_color[0], flash_color[1], flash_color[2], 0),
+        duration=1,
+        curve=curve.linear
+    )
+
+    destroy(flash, delay=1.1)
 
 # Game objects (created after app initialization)
 table = Table()
