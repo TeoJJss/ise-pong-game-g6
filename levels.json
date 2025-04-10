@@ -7,11 +7,12 @@
                     "Judge: The rules are simple:","Judge: You will play against your opponent in a game of Pong.","The objective is to score points by getting the ball past your opponent's paddle.",
                     "Judge: The first player to score 5 points wins the game.","Use the Left and Right keys to control your paddle.","Judge: Are you ready?",
                     "The game will start in 3 seconds.","3!","2!","1!","GO!"],
-        "bot_accuracy": 0.8,
+        "bot_accuracy": 0.1,
         "background": "./assets/images/lvl1.jpg",
-        "background_music": "",
+        "background_music": "./assets/audio/bgmlvl1.mp3",
         "win_captions": ["You win!","Judge: Player 1 is the winner!","Judge: Player 1 has proven himself to be a worthy opponent!","Narrator: Player 1 has won his first match and is now ready to take on the next challenge."],
         "lose_captions": ["You lost", "Try again"],
+        "music_volume": 0.1,
         "next": "level_2"
     },
     "level_2": {
@@ -22,7 +23,7 @@
                     "Judge: Welcome to the finals of Pong! ","Judge: For this year's finals, the pong table will have obstacles along with a shorten paddle to spice things up","Judge: Players are you ready?", "3!","2!","1!", "GO!"],
         "bot_accuracy": 0.9,
         "background": "./assets/images/lvl2.jpg",
-        "background_music": "",
+        "background_music": "./assets/audio/bgmlvl2.mp3",
         "obstacle":[ 
             {
                 "enabled": true,
@@ -37,6 +38,7 @@
         ],
         "win_captions": ["Congrats", "You win"],
         "lose_captions": ["You failed to prove yourself", "Try again"],
+        "music_volume": 0.1,
         "next": null
     }
 }

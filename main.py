@@ -227,18 +227,17 @@ def start_level():
             window.color = color.gray  # Fallback if background image fails to load
 
     # Update background music (rest of your start_level code remains the same)
+    music_volume = level_data.get('music_volume', 0.1)
+
     if level_data.get('background_music', ''):
         if hasattr(start_level, 'bg_music'):
             start_level.bg_music.clip = level_data['background_music']
+            start_level.bg_music.volume = music_volume
             if not start_level.bg_music.playing:
                 start_level.bg_music.play()
         else:
-            start_level.bg_music = Audio(level_data['background_music'], loop=True, autoplay=True, volume=0.5)
-    else:
-        if hasattr(start_level, 'bg_music'):
-            start_level.bg_music.stop()
-            destroy(start_level.bg_music)
-            del start_level.bg_music
+            start_level.bg_music = Audio(level_data['background_music'], loop=True, autoplay=True, volume=music_volume)
+
 
     obstacle_ls = level_data.get('obstacle', [])
     obstacle_entities = []
