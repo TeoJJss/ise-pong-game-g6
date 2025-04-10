@@ -36,7 +36,8 @@
                 "scale": [0.15, 0.1, 0.02]
             }
         ],
-        "win_captions": ["Congrats", "You win"],
+        "win_captions": ["Congrats", "You win", "Judge: Player 1 is the winner!", "Judge: what an astonishing final match!","Judge: Player 1 has won the finals and is now the champion of Pong!", 
+                        "Narrator: Player has proven himself that he is the best pong player in the world!", "Thanks for playing!"],
         "lose_captions": ["You failed to prove yourself", "Try again"],
         "music_volume": 0.1,
         "next": null
