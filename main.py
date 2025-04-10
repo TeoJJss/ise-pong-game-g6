@@ -158,11 +158,11 @@ def proceed_to_next_level(message, is_player_winner):
                 else:
                     end_game("All Levels Complete!", is_player_winner=True)
             else:
-                invoke(start_level, delay=0.5) # Restart current level if player loses
+                invoke(start_level, restart=True, delay=0.5) # Restart current level if player loses
 
     display_end_level_caption(0)
 
-def start_level():
+def start_level(restart=False):
     global message_text, obstacle_entities, score_A, score_B, point_text, background_entity, bg_music, ball
 
     score_A = 0
@@ -174,7 +174,7 @@ def start_level():
     if message_text:
         message_text.enabled = False
 
-    # Destroy old obstacles
+    # Remove obstacles from previous level
     if hasattr(start_level, 'obstacle_entities'):
         for obs in start_level.obstacle_entities:
             destroy(obs)
@@ -196,19 +196,17 @@ def start_level():
             window_aspect = window.aspect_ratio
             texture_aspect = bg_img.width / bg_img.height if bg_img.height > 0 else 1
 
+            # Scale bg img based on width and height
             if window_aspect > texture_aspect:
-                # Window is wider, scale width to cover
                 scale_x = window_aspect
                 scale_y = 1.0
             else:
-                # Window is taller, scale height to cover
                 scale_x = 1.0
                 scale_y = 1.0 / window_aspect * texture_aspect
 
-            # Slightly increase the scale to ensure full coverage
-            coverage_multiplier = 1.05  # Adjust this value if needed
+            coverage_multiplier = 1.05  
 
-            new_scale_x = scale_x * 33 * coverage_multiplier  # Adjust base scale (20) as needed
+            new_scale_x = scale_x * 33 * coverage_multiplier  
             new_scale_y = scale_y * 20 * coverage_multiplier
 
             if background_entity:
@@ -222,21 +220,27 @@ def start_level():
                     position=(0, -7, 10),
                     double_sided=True,
                 )
-            start_level.background_entity = background_entity # Store for potential later use
+            start_level.background_entity = background_entity 
         else:
-            window.color = color.gray  # Fallback if background image fails to load
+            window.color = color.gray  
 
-    # Update background music (rest of your start_level code remains the same)
+    # Update background music 
     music_volume = level_data.get('music_volume', 0.1)
 
     if level_data.get('background_music', ''):
         if hasattr(start_level, 'bg_music'):
-            start_level.bg_music.clip = level_data['background_music']
-            start_level.bg_music.volume = music_volume
-            if not start_level.bg_music.playing:
-                start_level.bg_music.play()
+            # If the music is already the same, just continue playing
+            if start_level.bg_music.clip != level_data['background_music']:
+                start_level.bg_music.stop()
+                destroy(start_level.bg_music)
+                start_level.bg_music = Audio(level_data['background_music'], loop=True, autoplay=True, volume=music_volume)
         else:
             start_level.bg_music = Audio(level_data['background_music'], loop=True, autoplay=True, volume=music_volume)
+    else:
+        if hasattr(start_level, 'bg_music'):
+            start_level.bg_music.stop()
+            destroy(start_level.bg_music)
+            del start_level.bg_music
 
 
     obstacle_ls = level_data.get('obstacle', [])
@@ -251,7 +255,10 @@ def start_level():
             obstacle_entities.append(obs)
     start_level.obstacle_entities = obstacle_entities # Store for cleanup
 
-    show_captions(level_data['captions'])
+    if restart:
+        show_captions(level_data['captions'][-5:]) # display countdown only if the level is restarted
+    else:
+        show_captions(level_data['captions'])
 
 def end_game(message, is_player_winner):
     global game_started, game_over, message_text, caption_text
@@ -322,7 +329,7 @@ def show_captions(level_captions):
                 outline_thickness=1,
                 shadow=True
             )
-            invoke(display_caption, index + 1, delay=2.6)
+            invoke(display_caption, index + 1, delay=2.85)
         else:
             if caption_text:
                 caption_text.enabled = False
@@ -335,7 +342,7 @@ def flash_screen(flash_color):
         model='quad',
         color=flash_color,
         scale=(40, 22),
-        position=(0, 0, -1),  # Set to a layer in front of everything
+        position=(0, 0, -1), 
         parent=camera.ui
     )
     
@@ -348,7 +355,7 @@ def flash_screen(flash_color):
 
     destroy(flash, delay=1.1)
 
-# Game objects (created after app initialization)
+# Game objects init
 table = Table()
 paddle_A = Opponent(table=table, z=0.22)
 paddle_B = Paddle(table=table, z=-0.62)
