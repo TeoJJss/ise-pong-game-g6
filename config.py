@@ -4,7 +4,10 @@ pong_sound = "./assets/audio/pong sound.mp3" # when collision
 paddle_move_sound = "" # when paddle move
 ball_move_sound = "" # when ball move
 victory_sound = "./assets/audio/Victory.mp3"
-lost_sound = ".assets/audio/lose.mp3"
+lost_sound = "./assets/audio/lose.mp3"
+game_start_sound = "./assets/audio/game_start.wav"
+
+# Font
 kanit_font = './assets/font/Kanit-Bold.ttf'
 roboto_font = './assets/font/RobotoSlab-Bold.ttf'
 
@@ -15,4 +18,4 @@ APP_TITLE = "Pong Game"
 APP_ICON = "./assets/images/pong.ico" # path to icon image file
 
 # Duration for each caption
-CAPTION_DELAY = 2
+CAPTION_DELAY = 2.3

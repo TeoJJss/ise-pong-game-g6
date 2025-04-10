@@ -4,7 +4,7 @@
         "win_score": 5,
         "paddle_length": 0.20,
         "captions": ["Level 1","Narrator: Player 1 is a rookie in the world of Pong, and he is about to face his first opponent, Player 2","Judge: Welcome to the world of Pong!",
-                    "Judge: The rules are simple:","Judge: You will play against your opponent in a game of Pong. The objective is to score points by getting the ball past your opponent's paddle.",
+                    "Judge: The rules are simple:","Judge: You will play against your opponent in a game of Pong.","The objective is to score points by getting the ball past your opponent's paddle.",
                     "Judge: The first player to score 5 points wins the game.","Use the Left and Right keys to control your paddle.","Judge: Are you ready?",
                     "The game will start in 3 seconds.","3!","2!","1!","GO!"],
         "bot_accuracy": 0.1,

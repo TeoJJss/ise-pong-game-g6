@@ -3,7 +3,7 @@ from components.paddle import Paddle
 from components.ball import Ball
 from components.opponent import Opponent
 from components.obstacle import Obstacle
-from ursina import Ursina, window, color, Text, camera, time, held_keys, invoke, application, Entity, Audio, destroy
+from ursina import Ursina, window, color, Text, camera, time, held_keys, invoke, application, Entity, Audio, destroy, load_texture
 import json
 from config import *
 
@@ -20,40 +20,14 @@ score_B = 0
 game_over = False
 obstacle_entity = None
 point_text = None
-paused = False  
-pause_text = None  
+paused = False
+pause_text = None
+background_entity = None
 
 # Game init
-app = Ursina(title = APP_TITLE, icon=APP_ICON)
+app = Ursina(title=APP_TITLE, icon=APP_ICON)
+window.resizable = False
 window.borderless = False
-
-# Game background
-if not levels[current_level_key].get('background', ''):
-    window.color = color.orange
-else:
-    background = Entity(
-        model='quad',
-        texture=levels[current_level_key]['background'],
-        scale=(window.aspect_ratio * 30, 50),        # Make it large enough to fill view
-        position=(0, 0, 10),     # Push it behind the camera/table
-        double_sided=True         # Make sure it's visible from both sides
-    )
-
-# GAme background music
-if levels[current_level_key].get('background_music', ''):
-    bg_music = Audio(levels[current_level_key]['background_music'], loop=True, autoplay=True, volume=0.5)
-
-# Game objects
-table = Table()
-paddle_A = Opponent(table=table, z=0.22)
-paddle_B = Paddle(table=table, z=-0.62)
-Text(text="Bot", scale=2, position=(-0.05, 0.32))
-Text(text="Player", scale=2, position=(-0.1, -0.4))
-point_text = Text(text=f"Bot : Player  = {score_A} : {score_B}", position=(-0.65, .35), scale=1.3, color=color.white, outline_color=color.blue,outline_thickness=1, shadow=True, font=roboto_font)
-pause_inst = Text(text="PRESS ESC to PAUSE/RESUME", position=(0.25, .35), scale=1.3, color=color.white, outline_color=color.blue,outline_thickness=1, shadow=True, font=roboto_font)
-ball = Ball(table=table)
-camera.position = (0, 15, -26)
-camera.rotation_x = 30
 
 def start_game():
     global game_started, game_time, score_A, score_B, ball
@@ -70,9 +44,9 @@ def input(key):
 
 def update():
     global score_A, score_B, game_time, game_started, current_level_key, point_text, obstacle_entities
-    
-    if paused or not game_started or game_over: # if game is paused OR not started OR already end, stop the game logic
-        return 
+
+    if paused or not game_started or game_over:  # if game is paused OR not started OR already end, stop the game logic
+        return
 
     level_data = levels[current_level_key]
     # paddle_A.set_length(level_data['paddle_length'])
@@ -162,7 +136,7 @@ def proceed_to_next_level(message, is_player_winner):
                 next_level = levels[current_level_key]['next']
                 if next_level:
                     current_level_key = next_level
-                    invoke(start_level, delay=0.5)
+                    invoke(start_level, delay=0.8)
                 else:
                     end_game("All Levels Complete!", is_player_winner=True)
             else:
@@ -171,7 +145,7 @@ def proceed_to_next_level(message, is_player_winner):
     display_end_level_caption(0)
 
 def start_level():
-    global message_text, obstacle_entities, score_A, score_B, point_text, background, bg_music, ball
+    global message_text, obstacle_entities, score_A, score_B, point_text, background_entity, bg_music, ball
 
     score_A = 0
     score_B = 0
@@ -195,22 +169,46 @@ def start_level():
     # Update background
     if not level_data.get('background', ''):
         window.color = color.orange
-        if hasattr(start_level, 'background_entity'):
-            destroy(start_level.background_entity)
-            del start_level.background_entity
+        if background_entity:
+            destroy(background_entity)
+            background_entity = None
     else:
-        if hasattr(start_level, 'background_entity'):
-            start_level.background_entity.texture = level_data['background']
-        else:
-            start_level.background_entity = Entity(
-                model='quad',
-                texture=level_data['background'],
-                scale=(window.aspect_ratio * 30, 50),  
-                position=(0, 0, 10),
-                double_sided=True
-            )
+        bg_img = load_texture(level_data['background'], filtering=0)
+        if bg_img:
+            window_aspect = window.aspect_ratio
+            texture_aspect = bg_img.width / bg_img.height if bg_img.height > 0 else 1
 
-    # Update background music
+            if window_aspect > texture_aspect:
+                # Window is wider, scale width to cover
+                scale_x = window_aspect
+                scale_y = 1.0
+            else:
+                # Window is taller, scale height to cover
+                scale_x = 1.0
+                scale_y = 1.0 / window_aspect * texture_aspect
+
+            # Slightly increase the scale to ensure full coverage
+            coverage_multiplier = 1.05  # Adjust this value if needed
+
+            new_scale_x = scale_x * 33 * coverage_multiplier  # Adjust base scale (20) as needed
+            new_scale_y = scale_y * 20 * coverage_multiplier
+
+            if background_entity:
+                background_entity.texture = bg_img
+                background_entity.scale = (new_scale_x, new_scale_y)
+            else:
+                background_entity = Entity(
+                    model='quad',
+                    texture=bg_img,
+                    scale=(new_scale_x, new_scale_y),
+                    position=(0, -7, 10),
+                    double_sided=True,
+                )
+            start_level.background_entity = background_entity # Store for potential later use
+        else:
+            window.color = color.gray  # Fallback if background image fails to load
+
+    # Update background music (rest of your start_level code remains the same)
     if level_data.get('background_music', ''):
         if hasattr(start_level, 'bg_music'):
             start_level.bg_music.clip = level_data['background_music']
@@ -292,9 +290,12 @@ def show_captions(level_captions):
         if index < len(level_captions):
             if caption_text:
                 caption_text.enabled = False
+            if index == len(level_captions) - 1:
+                if game_start_sound:
+                    Audio(game_start_sound)
             caption_text = Text(
                 text=level_captions[index],
-                scale=1.5,
+                scale=1.2,
                 position=(0, 0.42),
                 color=color.azure,
                 background=True,
@@ -304,13 +305,25 @@ def show_captions(level_captions):
                 outline_thickness=1,
                 shadow=True
             )
-            invoke(display_caption, index + 1, delay=CAPTION_DELAY)
+            invoke(display_caption, index + 1, delay=3)
         else:
             if caption_text:
                 caption_text.enabled = False
             start_game()
 
     display_caption(0)
+
+# Game objects (created after app initialization)
+table = Table()
+paddle_A = Opponent(table=table, z=0.22)
+paddle_B = Paddle(table=table, z=-0.62)
+Text(text="Bot", scale=1, position=(-0.05, 0.32), background = True, outline_color=color.black, outline_thickness=1,font=roboto_font)
+Text(text="Player", scale=1, position=(-0.05, -0.42), background = True, outline_color=color.black, outline_thickness=1,font=roboto_font)
+point_text = Text(text=f"Bot : Player  = {score_A} : {score_B}", position=(-0.65, .35), scale=1.3, color=color.white, outline_color=color.blue, outline_thickness=1, shadow=True, font=roboto_font)
+pause_inst = Text(text="PRESS ESC to PAUSE/RESUME", position=(0.25, .35), scale=1.3, color=color.white, outline_color=color.blue, outline_thickness=1, shadow=True, font=roboto_font)
+ball = Ball(table=table)
+camera.position = (0, 15, -26)
+camera.rotation_x = 30
 
 # Start Level 1
 start_level()
