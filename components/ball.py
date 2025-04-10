@@ -1,5 +1,5 @@
 from ursina import Entity, color, time, invoke, Audio
-from config import ball_move_sound
+# from config import ball_move_sound
 import random
 
 class Ball(Entity):
@@ -20,8 +20,8 @@ class Ball(Entity):
         self.texture = 'white_cube'  
 
     def move(self):
-        if ball_move_sound:
-            Audio(ball_move_sound)
+        # if ball_move_sound:
+        #     Audio(ball_move_sound)
         self.x += self.dx * self.speed * time.dt
         self.z += self.dz * self.speed * time.dt
 
@@ -30,7 +30,7 @@ class Ball(Entity):
         self.z = -0.20
         self.dx = 0
         self.dz = 0
-        invoke(self.resume_movement, delay= 3 if wait else 0)
+        invoke(self.resume_movement, delay=2.6 if wait else 0)
 
     def resume_movement(self):
         # Randomly choose -1 or 1 for direction

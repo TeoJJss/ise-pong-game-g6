@@ -138,7 +138,7 @@ def proceed_to_next_level(message, is_player_winner):
                 text=captions[index],
                 scale=1.5,
                 position=(0, 0.4),
-                color=color.azure,
+                color=color.white,
                 background=True,
                 origin=(0, 0),
                 font=kanit_font,
@@ -286,7 +286,7 @@ def end_game(message, is_player_winner):
                 text=captions[index],
                 scale=1.5,
                 position=(0, 0.42),
-                color=color.azure,
+                color=color.white,
                 background=True,
                 origin=(0, 0),
                 font=kanit_font,
@@ -315,7 +315,7 @@ def show_captions(level_captions):
                 text=level_captions[index],
                 scale=1.2,
                 position=(0, 0.42),
-                color=color.azure,
+                color=color.white,
                 background=True,
                 origin=(0, 0),
                 font=kanit_font,
@@ -323,7 +323,7 @@ def show_captions(level_captions):
                 outline_thickness=1,
                 shadow=True
             )
-            invoke(display_caption, index + 1, delay=3)
+            invoke(display_caption, index + 1, delay=2.6)
         else:
             if caption_text:
                 caption_text.enabled = False
@@ -343,7 +343,7 @@ def flash_screen(flash_color):
     # Fade it out smoothly
     flash.animate_color(
         color.rgba(flash_color[0], flash_color[1], flash_color[2], 0),
-        duration=1,
+        duration=2,
         curve=curve.linear
     )
 

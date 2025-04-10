@@ -1,8 +1,8 @@
 # File path for audio
 whistle_sound = "./assets/audio/Winning.mp3" # when a player win
 pong_sound = "./assets/audio/pong sound.mp3" # when collision
-paddle_move_sound = "" # when paddle move
-ball_move_sound = "" # when ball move
+# paddle_move_sound = "" # when paddle move
+# ball_move_sound = "" # when ball move
 victory_sound = "./assets/audio/Victory.mp3"
 lost_sound = "./assets/audio/lose.mp3"
 game_start_sound = "./assets/audio/game_start.wav"

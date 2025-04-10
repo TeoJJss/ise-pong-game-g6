@@ -1,5 +1,5 @@
 from ursina import Entity, color, time, Audio
-from config import paddle_move_sound
+# from config import paddle_move_sound
 
 class Paddle(Entity):
     def __init__(self, table, x=0, z=0.22):
@@ -13,8 +13,8 @@ class Paddle(Entity):
         )
 
     def move(self, direction):
-        if paddle_move_sound:
-            Audio(paddle_move_sound)
+        # if paddle_move_sound:
+        #     Audio(paddle_move_sound)
         self.x += direction * time.dt
 
     def set_length(self, length):
