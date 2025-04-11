@@ -19,7 +19,7 @@
         "ball_speed": 1.1,
         "win_score": 5,
         "paddle_length": 0.15,
-        "captions": ["Level 2: Obstacles.","Narrator: After Player 1 has climbed the rankings and able to participate in the world championship","narrator: Player 1 has reached the finals, held at a prestigious arena, facing his long rival Player 2", 
+        "captions": ["Level 2: Obstacles.","Narrator: After Player 1 has climbed the rankings and able to participate in the world championship","Narrator: Player 1 has reached the finals, held at a prestigious arena, facing his long rival Player 2", 
                     "Judge: Welcome to the finals of Pong! ","Judge: For this year's finals, the pong table will have obstacles along with a shorten paddle to spice things up","Judge: Players are you ready?", "3!","2!","1!", "GO!"],
         "bot_accuracy": 0.9,
         "background": "./assets/images/lvl2.jpg",
