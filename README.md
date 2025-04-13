@@ -7,7 +7,7 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Run the following command to launch:
+Run the following command to launch the game:
 ```
 python main.py
 ```
