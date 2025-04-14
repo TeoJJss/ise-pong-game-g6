@@ -19,24 +19,26 @@ class Ball(Entity):
         self.fire_effect_applied = False  
 
         self.texture = 'white_cube'  
-
-    def apply_fire_texture(self):
         self.fire_effect = Animation(
             fire_animation,
-            fps=10,
+            fps=10,           
             loop=True,
             parent=self,
-            scale=2,
+            scale=2,       
             position=(0, 0.05, 0.5),
             billboard=True
         )
+        self.fire_effect.enabled = False
+
+    def apply_fire_texture(self):
+        self.fire_effect.enabled = True
 
     def move(self):
         self.x += self.dx * self.speed * time.dt
         self.z += self.dz * self.speed * time.dt
 
         if self.speed >= 2 and not self.fire_effect_applied:
-            invoke(self.apply_fire_texture)
+            invoke(self.apply_fire_texture, delay=0.1)
             self.fire_effect_applied = True
 
     def reset_position(self, wait=False):
