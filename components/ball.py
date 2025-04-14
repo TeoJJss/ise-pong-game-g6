@@ -1,5 +1,5 @@
-from ursina import Entity, color, time, invoke, Audio
-# from config import ball_move_sound
+from ursina import Entity, color, time, invoke,Animation
+from config import fire_animation
 import random
 
 class Ball(Entity):
@@ -16,14 +16,28 @@ class Ball(Entity):
         self.dz = 0.2
         self.speed = speed
         self.just_bounced = False
+        self.fire_effect_applied = False  
 
         self.texture = 'white_cube'  
 
+    def apply_fire_texture(self):
+        self.fire_effect = Animation(
+            fire_animation,
+            fps=10,
+            loop=True,
+            parent=self,
+            scale=2,
+            position=(0, 0.05, 0.5),
+            billboard=True
+        )
+
     def move(self):
-        # if ball_move_sound:
-        #     Audio(ball_move_sound)
         self.x += self.dx * self.speed * time.dt
         self.z += self.dz * self.speed * time.dt
+
+        if self.speed >= 2 and not self.fire_effect_applied:
+            invoke(self.apply_fire_texture)
+            self.fire_effect_applied = True
 
     def reset_position(self, wait=False):
         self.x = 0

@@ -7,6 +7,8 @@ victory_sound = "./assets/audio/Victory.mp3"
 lost_sound = "./assets/audio/lose.mp3"
 game_start_sound = "./assets/audio/game_start.wav"
 
+fire_animation = './assets/images/fire_ball_animation.gif'
+
 # Font
 kanit_font = './assets/font/Kanit-Bold.ttf'
 roboto_font = './assets/font/RobotoSlab-Bold.ttf'
