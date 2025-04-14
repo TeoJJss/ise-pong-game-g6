@@ -24,8 +24,8 @@ class Ball(Entity):
             fps=10,           
             loop=True,
             parent=self,
-            scale=2,       
-            position=(0, 0.05, 0.5),
+            scale=3,       
+            position=(0, -1, 0.5),
             billboard=True
         )
         self.fire_effect.enabled = False
