@@ -167,6 +167,8 @@ def start_level(restart=False):
 
     score_A = 0
     score_B = 0
+    ball.fire_effect_applied = False
+    ball.fire_effect.enabled = False
 
     if point_text:
         point_text.text = f"Bot : Player  = {score_A} : {score_B}"
