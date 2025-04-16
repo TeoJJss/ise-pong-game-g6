@@ -20,4 +20,4 @@ APP_TITLE = "Pong Game"
 APP_ICON = "./assets/images/pong.ico" # path to icon image file
 
 # Duration for each caption
-CAPTION_DELAY = 2.3
+CAPTION_DELAY = 2.45
