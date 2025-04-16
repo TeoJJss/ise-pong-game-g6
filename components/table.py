@@ -47,12 +47,14 @@ class Table(Entity):
                 Audio(whistle_sound)
             score_B += 1
             ball.reset_position(True)
+            ball.play_small_explosion()
 
         if ball.z < -0.65:
             if whistle_sound:
                 Audio(whistle_sound)
             score_A += 1
             ball.reset_position(True)
+            ball.play_small_explosion()
 
         # Ball Collision with Paddles
         hit_info = ball.intersects()

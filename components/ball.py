@@ -1,5 +1,5 @@
 from ursina import Entity, color, time, invoke,Animation
-from config import fire_animation
+from config import fire_animation, small_explosion
 import random
 
 class Ball(Entity):
@@ -28,17 +28,34 @@ class Ball(Entity):
             position=(0, -1, 0.5),
             billboard=True
         )
+        self.small_explosion_effect = Animation(
+            small_explosion,
+            fps=1,           
+            loop=True,
+            parent=self,
+            scale=3,       
+            position=(0, 0.05, 0.5),
+            billboard=True,
+            enabled=False
+        )
         self.fire_effect.enabled = False
 
     def apply_fire_texture(self):
         self.fire_effect.enabled = True
+
+    def play_small_explosion(self):
+        self.small_explosion_effect.enabled = True
+        invoke(self.stop_small_explosion, delay=1)  # Stop after 1 seconds
+
+    def stop_small_explosion(self):
+        self.small_explosion_effect.enabled = False
 
     def move(self):
         self.x += self.dx * self.speed * time.dt
         self.z += self.dz * self.speed * time.dt
 
         if self.speed >= 2 and not self.fire_effect_applied:
-            invoke(self.apply_fire_texture, delay=0.1)
+            invoke(self.apply_fire_texture, delay=0.35)
             self.fire_effect_applied = True
 
     def reset_position(self, wait=False):
