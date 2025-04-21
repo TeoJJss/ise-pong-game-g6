@@ -223,6 +223,8 @@ def start_level(restart=False):
                     double_sided=True,
                 )
             start_level.background_entity = background_entity 
+
+            flash_screen(flash_color=color.rgba(0, 100, 255, 0.4), duration=4)
         else:
             window.color = color.gray  
 
@@ -339,7 +341,7 @@ def show_captions(level_captions):
 
     display_caption(0)
 
-def flash_screen(flash_color):
+def flash_screen(flash_color, duration=2):
     flash = Entity(
         model='quad',
         color=flash_color,
@@ -351,7 +353,7 @@ def flash_screen(flash_color):
     # Fade it out smoothly
     flash.animate_color(
         color.rgba(flash_color[0], flash_color[1], flash_color[2], 0),
-        duration=2,
+        duration=duration,
         curve=curve.linear
     )
 
