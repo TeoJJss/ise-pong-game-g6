@@ -107,15 +107,15 @@ def update():
     if score_A >= level_data['win_score']:
         proceed_to_next_level("Bot Wins!", is_player_winner=False)
         snow.enabled = True
-        invoke(stop_snow, delay=2)
+        invoke(stop_snow, delay=4)
     elif score_B >= level_data['win_score']:
         if level_data['next'] is None:
             firework.enabled=True
-            invoke(stop_firework, delay=1.5)
+            invoke(stop_firework, delay=2)
             end_game("Player Wins Final Level!", is_player_winner=True)
         else:
             firework.enabled=True
-            invoke(stop_firework, delay=1.5)
+            invoke(stop_firework, delay=2)
             proceed_to_next_level("Player Wins!", is_player_winner=True)
 
 def stop_firework():
@@ -363,7 +363,7 @@ def show_captions(level_captions):
                 outline_thickness=1,
                 shadow=True
             )
-            invoke(display_caption, index + 1, delay=2.75)
+            invoke(display_caption, index + 1, delay=1)
         else:
             if caption_text:
                 caption_text.enabled = False
