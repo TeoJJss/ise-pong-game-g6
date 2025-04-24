@@ -41,7 +41,7 @@ snow = Animation(
     lost_effect,
     fps=1.5,           
     loop=True,
-    scale=(25, 30),       
+    scale=(25, 10),       
     position=(0, 1, 0),
     billboard=True,
     enabled=False
