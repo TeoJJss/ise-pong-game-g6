@@ -6,7 +6,7 @@ pong_sound = "./assets/audio/pong sound.mp3" # when collision
 victory_sound = "./assets/audio/Victory.mp3"
 victory_effect = "./assets/images/firework_1.gif"
 lost_sound = "./assets/audio/lose.mp3"
-lost_effect = "./assets/images/snow.gif"
+lost_effect = "./assets/images/rain.gif"
 game_start_sound = "./assets/audio/game_start.wav"
 
 fire_animation = './assets/images/fire_ball_animation.gif'
