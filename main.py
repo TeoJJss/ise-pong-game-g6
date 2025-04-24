@@ -3,7 +3,7 @@ from components.paddle import Paddle
 from components.ball import Ball
 from components.opponent import Opponent
 from components.obstacle import Obstacle
-from ursina import Ursina, window, color, Text, camera, time, held_keys, invoke, application, Entity, Audio, destroy, load_texture, curve
+from ursina import Ursina, window, color, Text, camera, time, held_keys, invoke, application, Entity, Audio, destroy, load_texture, curve, Animation
 import json
 from config import *
 
@@ -28,6 +28,24 @@ background_entity = None
 app = Ursina(title=APP_TITLE, icon=APP_ICON)
 window.resizable = False
 window.borderless = False
+firework = Animation(
+    victory_effect,
+    fps=1.5,           
+    loop=True,
+    scale=(35, 20),       
+    position=(0, 1, 0),
+    billboard=True,
+    enabled=False
+)
+snow = Animation(
+    lost_effect,
+    fps=1.5,           
+    loop=True,
+    scale=(25, 30),       
+    position=(0, 1, 0),
+    billboard=True,
+    enabled=False
+)
 
 def start_game():
     global game_started, game_time, score_A, score_B, ball
@@ -74,12 +92,13 @@ def update():
     if score_A > previous_score_A:
         Audio(whistle_sound)
         flash_screen(flash_color=color.rgba(252/255, 3/255, 3/255, 0.4))
-        camera.shake(duration=0.2, magnitude=0.02)
+        camera.shake(duration=0.5, magnitude=1.8)
 
     elif score_B > previous_score_B:
         Audio(whistle_sound)
         flash_screen(flash_color=color.rgba(15/255, 252/255, 3/255, 0.4))
-        camera.shake(duration=0.2, magnitude=0.02)
+        
+        camera.shake(duration=0.5, magnitude=1.8)
 
     # display updated points
     point_text.text = f"Bot : Player  = {score_A} : {score_B}"
@@ -87,12 +106,23 @@ def update():
     # check win condition
     if score_A >= level_data['win_score']:
         proceed_to_next_level("Bot Wins!", is_player_winner=False)
+        snow.enabled = True
+        invoke(stop_snow, delay=2)
     elif score_B >= level_data['win_score']:
         if level_data['next'] is None:
+            firework.enabled=True
+            invoke(stop_firework, delay=1.5)
             end_game("Player Wins Final Level!", is_player_winner=True)
         else:
+            firework.enabled=True
+            invoke(stop_firework, delay=1.5)
             proceed_to_next_level("Player Wins!", is_player_winner=True)
 
+def stop_firework():
+    firework.enabled = False
+
+def stop_snow():
+    snow.enabled = False
 
 def toggle_pause():
     global paused, pause_text
