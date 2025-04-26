@@ -59,19 +59,28 @@ class Table(Entity):
         # Ball Collision with Paddles
         hit_info = ball.intersects()
         if hit_info.hit:
-            if hit_info.entity == paddle_A or hit_info.entity == paddle_B or [obs for obs in obstacle_entities if hit_info.entity == obs]:
+            if hit_info.entity == paddle_A or hit_info.entity == paddle_B:
                 if pong_sound:
                     Audio(pong_sound)
                 ball.dz = -ball.dz
                 self.animate_paddle_hit(hit_info.entity)
+
+            # Ball Collision with Obstacles
+            if obstacle_entities:
+                for obstacle in obstacle_entities:
+                    if hit_info.entity == obstacle:
+                        obstacle.increment_hit_count()  
+                        if pong_sound:
+                            Audio(pong_sound)
+                        ball.dz = -ball.dz
+                        self.animate_paddle_hit(hit_info.entity)
         
         return score_A, score_B
     
     def animate_paddle_hit(self, paddle):
-        # Spark effect at paddle position (slightly above paddle for visibility)
         hit_position = paddle.world_position + Vec3(0, 0.05, 0)
 
-        for _ in range(6):  # Number of sparks
+        for _ in range(6): 
             offset = Vec3(uniform(-0.03, 0.03), uniform(-0.03, 0.03), uniform(-0.03, 0.03))
             spark = Entity(
                 model='sphere',
