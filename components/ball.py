@@ -10,7 +10,7 @@ class Ball(Entity):
             color=color.brown,
             scale=0.05,
             position=(0, 3.71, -0.20),
-            collider='sphere'  
+            collider='sphere'
         )
         self.dx = 0.1
         self.dz = 0.2
@@ -18,7 +18,7 @@ class Ball(Entity):
         self.just_bounced = False
         self.fire_effect_applied = False  
 
-        self.texture = 'white_cube'  
+        self.texture = "./assets/images/ball_texture.jpg"   
         self.fire_effect = Animation(
             fire_animation,
             fps=10,           

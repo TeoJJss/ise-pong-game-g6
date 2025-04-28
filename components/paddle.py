@@ -9,7 +9,8 @@ class Paddle(Entity):
             model='cube',
             scale=(0.20, 0.03, 0.05),
             position=(x, 3.7, z),
-            collider='box'
+            collider='box',
+            texture='red_paddle_texture.jpg', 
         )
 
     def move(self, direction):

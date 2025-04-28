@@ -8,6 +8,7 @@ class Opponent(Paddle):
         self.speed = speed  # Bot paddle 
         self.chance_to_miss = 1-chance_to_win
         self.color = color.blue
+        self.texture = './assets/images/blue_paddle_texture.png'
 
     def follow_ball(self, ball):
         if abs(ball.x - self.x) > 0.01:
