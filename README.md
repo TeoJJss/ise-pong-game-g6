@@ -16,7 +16,7 @@ python main.py
 - Please upload all necessary **images/audio/font files** to the relevant subfolders in `assets/`.  
 - For modification of general params, please do at `config.py`.  
 - For modification of level-specific params, please do so at `levels.json`.   
-- If the param is images/audio, please make sure the files have been uploaded in `assets/` folder, and insert the **relative file path** to the param.  
+- If the param is image/audio, please make sure the file have been uploaded in `assets/` folder, and insert the **relative file path** to the param.  
 
 ## Credits  
 - <a href="https://github.com/TeoJJss">Teo Jun Jia</a>  

@@ -324,7 +324,7 @@ def end_game(message, is_player_winner):
                 caption_text.enabled = False
             caption_text = Text(
                 text=captions[index],
-                scale=1.5,
+                scale=1.2,
                 position=(0, 0.42),
                 color=color.white,
                 background=True,
@@ -345,6 +345,11 @@ def end_game(message, is_player_winner):
 def show_captions(level_captions):
     def display_caption(index):
         global caption_text
+
+        if paused:
+            invoke(display_caption, index, delay=0.2)  # Retry until unpaused
+            return
+        
         if index < len(level_captions):
             if caption_text:
                 caption_text.enabled = False
@@ -363,7 +368,7 @@ def show_captions(level_captions):
                 outline_thickness=1,
                 shadow=True
             )
-            invoke(display_caption, index + 1, delay=2.75)
+            invoke(display_caption, index + 1, delay=2.2)
         else:
             if caption_text:
                 caption_text.enabled = False

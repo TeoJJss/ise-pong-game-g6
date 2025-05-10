@@ -7,7 +7,7 @@
                     "Judge: The rules are simple:","Judge: You will play against your opponent in a game of Pong.","The objective is to score points by getting the ball past your opponent's paddle.",
                     "Judge: The first player to score 5 points wins the game.","Use the Left and Right keys to control your paddle.","Judge: Are you ready?",
                     "The game will start in 3 seconds.","3!","2!","1!","GO!"],
-        "bot_accuracy": 0.75,
+        "bot_accuracy": 0.70,
         "background": "./assets/images/lvl1.jpg",
         "background_music": "./assets/audio/bgmlvl1.mp3",
         "win_captions": ["You win!","Judge: Player is the winner!","Judge: Player has proven himself to be a worthy opponent!","Narrator: Player has won his first match and is now ready to take on the next challenge."],
@@ -21,7 +21,7 @@
         "paddle_length": 0.15,
         "captions": ["Level 2: Obstacles.","Narrator: After Player has climbed the rankings and able to participate in the world championship","Narrator: Player has reached the finals, held at a prestigious arena, facing his long rival Bot", 
                     "Judge: Welcome to the finals of Pong! ","Judge: For this year's finals, the pong table will have obstacles along with a shorten paddle to spice things up","Judge: Players are you ready?", "3!","2!","1!", "GO!"],
-        "bot_accuracy": 0.9,
+        "bot_accuracy": 0.95,
         "background": "./assets/images/lvl2.jpg",
         "background_music": "./assets/audio/bgmlvl2.mp3",
         "obstacle":[
@@ -54,11 +54,6 @@
                 "enabled": true,
                 "position": [0.13, 3.71, -0.38],
                 "scale": [0.1, 0.05, 0.02]
-            },
-            {
-                "enabled": true,
-                "position": [-0.3, 3.71, -0.20],
-                "scale": [0.13, 0.08, 0.02]
             }
         ],
         "win_captions": ["Congrats", "You win", "Judge: Player is the winner!", "Judge: what an astonishing final match!","Judge: Player has won the finals and is now the champion of Pong!", 
