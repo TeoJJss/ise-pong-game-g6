@@ -1,4 +1,4 @@
-from ursina import Entity, color, destroy, curve
+from ursina import Entity, color, destroy, curve, invoke
 
 class Obstacle(Entity):
     def __init__(self, position=(0, 0.26, 0), scale=(0.1, 0.05, 0.02), parent=None, color=color.black):
@@ -29,4 +29,18 @@ class Obstacle(Entity):
         self.animate_scale((0.01, 0.01, 0.01), duration=1, curve=curve.in_expo)
         self.animate_color(color.rgba(255, 0, 0, 0), duration=1, curve=curve.linear)
 
-        destroy(self, delay=1.1)
+        invoke(self.temporarily_disable, delay=1.1)
+
+    def temporarily_disable(self):
+        self.enabled = False
+        invoke(self.revive, delay=15)
+
+    def revive(self):
+        self.enabled = True
+        self.color = color.rgba(0, 255, 0, 255)
+        self.rotation = (0, 0, 0)
+        self.scale = (0.01, 0.01, 0.01)
+        self.animate_scale((0.1, 0.05, 0.02), duration=1, curve=curve.out_bounce)
+        self.hit_count = 0
+
+        invoke(setattr, self, 'color', color.rgba(0, 0, 0, 255), delay=1.5)

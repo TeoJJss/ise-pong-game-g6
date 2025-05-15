@@ -11,6 +11,7 @@ game_start_sound = "./assets/audio/game_start.wav"
 
 fire_animation = './assets/images/fire_ball_animation.gif'
 small_explosion ='./assets/images/small_explosion_effect.gif'
+ending_animation = './assets/images/ending.gif'
 
 # Font
 kanit_font = './assets/font/Kanit-Bold.ttf'

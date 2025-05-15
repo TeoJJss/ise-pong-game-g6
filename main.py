@@ -47,6 +47,16 @@ snow = Animation(
     enabled=False
 )
 
+ending = Animation(
+    ending_animation,
+    fps=1.5,           
+    loop=True,
+    scale=(15, 10),       
+    position=(0, 1, 0),
+    billboard=True,
+    enabled=False
+)
+
 def start_game():
     global game_started, game_time, score_A, score_B, ball
     game_started = True
@@ -123,6 +133,9 @@ def stop_firework():
 
 def stop_snow():
     snow.enabled = False
+
+def stop_ending():
+    ending.enabled = False
 
 def toggle_pause():
     global paused, pause_text
@@ -332,6 +345,9 @@ def end_game(message, is_player_winner):
                 shadow=True
             )
             invoke(display_caption, index + 1, delay=CAPTION_DELAY)
+            if index == len(captions)-1:
+                ending.enabled = True
+                invoke(stop_ending, delay=4)
         else:
             if caption_text:
                 caption_text.enabled = False
