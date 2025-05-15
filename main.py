@@ -188,7 +188,7 @@ def proceed_to_next_level(message, is_player_winner):
                 else:
                     end_game("All Levels Complete!", is_player_winner=True)
             else:
-                invoke(start_level, restart=True, delay=0.5) # Restart current level if player loses
+                invoke(start_level, restart=True, delay=0.5) # restart current level if player loses
 
     display_end_level_caption(0)
 
@@ -206,7 +206,7 @@ def start_level(restart=False):
     if message_text:
         message_text.enabled = False
 
-    # Remove obstacles from previous level
+    # remove obstacles from previous level
     if hasattr(start_level, 'obstacle_entities'):
         for obs in start_level.obstacle_entities:
             destroy(obs)
@@ -216,7 +216,6 @@ def start_level(restart=False):
 
     level_data = levels[current_level_key]
 
-    # Update background
     if not level_data.get('background', ''):
         window.color = color.orange
         if background_entity:
@@ -228,7 +227,6 @@ def start_level(restart=False):
             window_aspect = window.aspect_ratio
             texture_aspect = bg_img.width / bg_img.height if bg_img.height > 0 else 1
 
-            # Scale bg img based on width and height
             if window_aspect > texture_aspect:
                 scale_x = window_aspect
                 scale_y = 1.0
@@ -258,12 +256,11 @@ def start_level(restart=False):
         else:
             window.color = color.gray  
 
-    # Update background music 
+    # update background music 
     music_volume = level_data.get('music_volume', 0.1)
 
     if level_data.get('background_music', ''):
         if hasattr(start_level, 'bg_music'):
-            # If the music is already the same, just continue playing
             if start_level.bg_music.clip != level_data['background_music']:
                 start_level.bg_music.stop()
                 destroy(start_level.bg_music)
@@ -287,10 +284,10 @@ def start_level(restart=False):
                 parent=table
             )
             obstacle_entities.append(obs)
-    start_level.obstacle_entities = obstacle_entities # Store for cleanup
+    start_level.obstacle_entities = obstacle_entities 
 
     if restart:
-        show_captions(level_data['captions'][-5:]) # display countdown only if the level is restarted
+        show_captions(level_data['captions'][-5:]) # display countdown caption only if the level is restarted
     else:
         show_captions(level_data['captions'])
 
@@ -308,7 +305,7 @@ def end_game(message, is_player_winner):
 
     level_data = levels[current_level_key]
 
-    # Choose the correct caption list
+    # Display win/lose captions
     captions = level_data['win_captions'] if is_player_winner else level_data['lose_captions']
 
     if victory_sound and is_player_winner:
@@ -316,7 +313,7 @@ def end_game(message, is_player_winner):
     elif lost_sound and not is_player_winner:
         Audio(lost_sound)
 
-    # Show captions before quitting
+    # ending captions
     def display_caption(index):
         global caption_text
         if index < len(captions):
@@ -385,7 +382,6 @@ def flash_screen(flash_color, duration=2):
         parent=camera.ui
     )
     
-    # Fade it out smoothly
     flash.animate_color(
         color.rgba(flash_color[0], flash_color[1], flash_color[2], 0),
         duration=duration,

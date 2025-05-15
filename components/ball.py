@@ -45,7 +45,7 @@ class Ball(Entity):
 
     def play_small_explosion(self):
         self.small_explosion_effect.enabled = True
-        invoke(self.stop_small_explosion, delay=1)  # Stop after 1 seconds
+        invoke(self.stop_small_explosion, delay=1)  # Stop explosion after 1 seconds
 
     def stop_small_explosion(self):
         self.small_explosion_effect.enabled = False

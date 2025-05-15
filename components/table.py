@@ -89,7 +89,7 @@ class Table(Entity):
                 position=hit_position + offset,
                 add_to_scene_entities=True
             )
-            # Animate spark scaling up slightly, then fading out
+            
             spark.animate_scale(0.05, duration=0.1)
             spark.animate_color(color.clear, duration=0.15)
             destroy(spark, delay=0.2)
