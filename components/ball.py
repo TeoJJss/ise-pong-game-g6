@@ -1,5 +1,5 @@
-from ursina import Entity, color, time, invoke,Animation
-from config import fire_animation, small_explosion
+from ursina import Entity, color, time, invoke,Animation, Audio
+from config import fire_animation, small_explosion, ball_explosion_sound
 import random
 
 class Ball(Entity):
@@ -44,6 +44,7 @@ class Ball(Entity):
         self.fire_effect.enabled = True
 
     def play_small_explosion(self):
+        Audio(ball_explosion_sound, volume=0.5)
         self.small_explosion_effect.enabled = True
         invoke(self.stop_small_explosion, delay=1)  # Stop explosion after 1 seconds
 

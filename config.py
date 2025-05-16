@@ -1,13 +1,14 @@
 # File path for audio
 whistle_sound = "./assets/audio/Winning.mp3" # when a player win
 pong_sound = "./assets/audio/pong sound.mp3" # when collision
-# paddle_move_sound = "" # when paddle move
-# ball_move_sound = "" # when ball move
 victory_sound = "./assets/audio/Victory.mp3"
 victory_effect = "./assets/images/firework_1.gif"
 lost_sound = "./assets/audio/lose.mp3"
 lost_effect = "./assets/images/rain.gif"
 game_start_sound = "./assets/audio/game_start.wav"
+ball_explosion_sound = "./assets/audio/boom.mp3"
+obstacle_spin_sound = "./assets/audio/spin.mp3"
+obstacle_zoom_sound = "./assets/audio/zoom.mp3"
 
 fire_animation = './assets/images/fire_ball_animation.gif'
 small_explosion ='./assets/images/small_explosion_effect.gif'
