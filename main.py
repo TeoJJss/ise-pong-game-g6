@@ -100,12 +100,12 @@ def update():
     score_A, score_B = table.check_collision(ball, paddle_A, paddle_B, obstacle_entities, score_A, score_B)
 
     if score_A > previous_score_A:
-        Audio(whistle_sound)
+        Audio(whistle_sound, volume=3)
         flash_screen(flash_color=color.rgba(252/255, 3/255, 3/255, 0.4))
         camera.shake(duration=0.5, magnitude=1.8)
 
     elif score_B > previous_score_B:
-        Audio(whistle_sound)
+        Audio(whistle_sound, volume=3)
         flash_screen(flash_color=color.rgba(15/255, 252/255, 3/255, 0.4))
         
         camera.shake(duration=0.5, magnitude=1.8)
