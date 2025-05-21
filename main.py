@@ -102,13 +102,13 @@ def update():
     if score_A > previous_score_A:
         Audio(whistle_sound, volume=3)
         flash_screen(flash_color=color.rgba(252/255, 3/255, 3/255, 0.4))
-        camera.shake(duration=0.5, magnitude=1.8)
+        camera.shake(duration=0.8, magnitude=2.5)
 
     elif score_B > previous_score_B:
         Audio(whistle_sound, volume=3)
         flash_screen(flash_color=color.rgba(15/255, 252/255, 3/255, 0.4))
         
-        camera.shake(duration=0.5, magnitude=1.8)
+        camera.shake(duration=0.8, magnitude=2.5)
 
     # display updated points
     point_text.text = f"Bot : Player  = {score_A} : {score_B}"

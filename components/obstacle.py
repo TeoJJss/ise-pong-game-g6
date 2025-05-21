@@ -1,4 +1,4 @@
-from ursina import Entity, color, Audio, curve, invoke
+from ursina import Entity, color, Audio, curve, invoke, scene
 from config import obstacle_spin_sound, obstacle_zoom_sound
 
 class Obstacle(Entity):
@@ -38,6 +38,8 @@ class Obstacle(Entity):
         invoke(self.revive, delay=15)
 
     def revive(self):
+        if self not in scene.entities:
+            return
         self.enabled = True
         self.color = color.rgba(0, 255, 0, 255)
         self.rotation = (0, 0, 0)
